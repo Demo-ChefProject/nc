@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #cd ~/home/jenkins/workspace/Chef-apache/
-cd C:\Jenkins\workspace\Chef-apache\
+cd C:\Jenkins\workspace\Chef-apache\nc
 
 # Creates a role for tomcat
 #sudo knife role from file /home/jenkins/workspace/Chef-apache/roles/apache.rb
-knife role from file C:\Jenkins\workspace\Chef-apache\roles\apache.rb
+knife role from file C:\Jenkins\workspace\Chef-apache\nc\roles\apache.rb
 
 
 # Upload cookbooks into Chef Server
