@@ -1,0 +1,5 @@
+file '/etc/tomcat7/tomcat-users.xml' do
+content '<tomcat-users><role rolename="manager-gui"/><role rolename="admin-gui"/><user username="admin" password="tucanoNAj4n3l4" roles="manager-gui,admin-gui"/></tomcat-users>
+' 
+action touch
+end
