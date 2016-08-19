@@ -1,24 +1,21 @@
-# Ubuntu Configuration
-#log_level                :info
-#log_location             STDOUT
-#node_name                'sasi'
-#client_key               '/home/ubuntu/.ssh/sasi.pem'
-#validation_client_name   'sasi'
-#validation_key           '/home/ubuntu/.ssh/atb-chef-admin.pem'
-#chef_server_url          'https://54.211.154.197/organizations/atb'
-#syntax_check_cache_path  '/home/jenkins/workspace/Chef-CookbookUpload/.chef/syntax_check_cache'
-#cookbook_path            '/home/jenkins/workspace/Chef-apache/cookbooks/'
-#knife[:node_log_max_files] = 9
-#knife[:node_log_path] = '/var/log/chef-server/nodes'
-#cookbook_path            ["#{current_dir}/../cookbooks/"]
+#!/bin/bash
 
-#######################
-# Windows configuration
-log_level                :info
-log_location             STDOUT
-node_name                'sasi'
-client_key               'C:\chef\client.pem'
-validation_client_name   'sasi'
-validation_key           'C:\chef\atb-chef-admin.pem'
-chef_server_url          "https://54.211.154.197/organizations/atb"
-cookbook_path            "C:/Jenkins/workspace/Chef-apache/cookbooks"
+#cd ~/home/jenkins/workspace/Chef-apache/
+cd C:\Jenkins\workspace\Chef-apache\
+
+# Creates a role for tomcat
+#sudo knife role from file /home/jenkins/workspace/Chef-apache/roles/apache.rb
+knife role from file C:\Jenkins\workspace\Chef-apache\roles\apache.rb
+
+
+# Upload cookbooks into Chef Server
+knife upload cookbooks apache
+
+# Bootstrap a node to its chef server
+knife bootstrap windows winrm 54.175.57.21 --winrm-user Administrator --winrm-password 'd*G%tc9"&"HLK' --node-name Rigil_node_Windows -r 'role[apache]' -y
+
+# Run this command to add the Host to the Jenkins slave(One time process)
+#ssh -o StrictHostKeyChecking=no -i /home/ubuntu/.ssh/agiletrailblazers.pem ubuntu@54.175.232.159 "sudo chef-client"
+
+# ssh into the chef node and execute the chef client to run its run list from chef server
+#ssh -i /home/ubuntu/.ssh/agiletrailblazers.pem ubuntu@54.175.232.159 "sudo chef-client"
