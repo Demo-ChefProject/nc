@@ -16,7 +16,7 @@ end
 execute "Remove Logs" do
   command 'cd #node{["nc4"]["apache"]["workdir"]}'
   command 'RD /S /Q #node{["nc4"]["apache"]["logdir"]}'
-  command 'RD /S /Q #node{#node{["nc4"]["apache"]["workdir"]}\errors'
+  command 'RD /S /Q #node{["nc4"]["apache"]["workdir"]}\errors'
 end
 
 
@@ -37,5 +37,5 @@ execute 'Create Windows service for Apache' do
   #command 'cd D:\NC4\HTTPD\bin'
   command 'cd #node{["nc4"]["apache"]["bindir"]}'
   command 'httpd.exe -k install -n "Apache 2.2 HTTP"'
-  command 'sc \\server config ServiceName obj= Domain\user password= pass'
+  command 'sc \\\\server config ServiceName obj= Domain\user password= pass'
 end
