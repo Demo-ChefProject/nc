@@ -30,6 +30,9 @@ end
 template '#node{["nc4"]["httpd-conf"]["url"]}' do
   #source 'httpd.erb'
   source '#node{["nc4"]["httpd-erb"]["url"]}'
+  owner "root"
+  group "root"
+  mode "066"
   variables( :server_name => 'MC3AgileDev')
 end
 
