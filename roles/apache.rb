@@ -1,3 +1,7 @@
-name "apache"
-description "This role installs and configures tomcat"
-run_list "recipe[apache::apache]"
+{
+	"name": "apache",
+	"description": "This role installs and configures apache httpd",
+	"run_list": [
+		"recipe[apache@0.1.1]"
+		]
+}
