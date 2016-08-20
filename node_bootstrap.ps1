@@ -12,7 +12,7 @@ knife role from file C:\Jenkins\workspace\Chef-apache\roles\apache.json
 knife upload cookbooks apache
 
 # Bootstrap a node to its chef server
- knife bootstrap windows winrm 54.175.57.21 --winrm-user Administrator --winrm-password 'd*G%tc9"&"HLK' --node-name Rigil_node_Windows -r 'role[apache]' -y
+# knife bootstrap windows winrm 54.175.57.21 --winrm-user Administrator --winrm-password 'd*G%tc9"&"HLK' --node-name Rigil_node_Windows -r 'role[apache]' -y
 
 #Passing credentials stored as a secure string
 $Pass = cat C:\securestring.txt | convertto-securestring
