@@ -28,7 +28,7 @@ end
 #file 'D:\NC4\MC3\HTTPD\conf\extra\MC3AgileDev.conf' do
 file '#node{["nc4"]["mc3agiledev-conf"]["url"]}'   do
   #source 'httpd-vhosts.conf'
-  source '#node{["nc4"]["httpd-vhost-conf"]["url"]}'
+  action : '#node{["nc4"]["httpd-vhost-conf"]["url"]}'
 end
 
 #template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
