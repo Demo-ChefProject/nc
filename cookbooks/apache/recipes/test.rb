@@ -8,5 +8,5 @@ end
 execute "Unzip Apache package" do
   command 'cd #node{["nc4"]["apache"]["install_location"]}'
   command 'unzip #{node["nc4"]["apache-httpd-32"]["package"]} #node{["nc4"]["apache"]["workdir"]}'
-  notifies :run, "execute[Remove Logs]", :immediately
+ # notifies :run, "execute[Remove Logs]", :immediately
 end
