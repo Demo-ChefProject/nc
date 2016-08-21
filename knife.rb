@@ -22,3 +22,13 @@ validation_client_name   'sasi'
 validation_key           'C:\chef\atb-chef-admin.pem'
 chef_server_url          "https://54.211.154.197/organizations/atb"
 cookbook_path            "C:/Jenkins/workspace/Chef-apache/cookbooks"
+
+#######################
+# Windows configuration
+#current_dir = File.dirname(__FILE__)
+#log_level                :info
+#log_location             STDOUT
+#node_name                "atb-admin"
+#client_key               "C:\chef\atb-admin.pem"
+#chef_server_url          "https://54.82.249.62/organizations/atb"
+#cookbook_path            "C:/Jenkins/workspace/Chef-apache/cookbooks"
