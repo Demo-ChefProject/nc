@@ -25,12 +25,12 @@ execute "Remove Logs" do
 end
 
 
-file 'C:\NC4\MC3\HTTPD\conf\extra\MC3AgileDev.conf' do
+#file 'C:\NC4\MC3\HTTPD\conf\extra\MC3AgileDev.conf' do
 #file '#node{["nc4"]["mc3agiledev-conf"]["url"]}'   do
   #source "httpd-vhosts.conf"
-  action :'#node{["nc4"]["httpd-vhost-conf"]["url"]}'
+#  action :'#node{["nc4"]["httpd-vhost-conf"]["url"]}'
 #  action :create
-end
+#end
 
 #template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
 template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
