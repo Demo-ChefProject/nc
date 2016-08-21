@@ -12,8 +12,9 @@ remote_file 'C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip' do
 end
 
 execute "Unzip Apache package" do
-  command 'cd #node{["nc4"]["apache"]["install_location"]}'
-  command 'unzip #{node["nc4"]["apache-httpd-32"]["package"]} #node{["nc4"]["apache"]["workdir"]}'
+  command 'cd C:\Program Files\7-Zip'
+  command 'cd ./7z.exe e C:\NC4\MC3\apache-httpd-32-2.2.2.32.zip -y -oC:\NC4\MC3\HTTPD'
+  #command 'unzip #{node["nc4"]["apache-httpd-32"]["package"]} #node{["nc4"]["apache"]["workdir"]}'
   notifies :run, "execute[Remove Logs]", :immediately
 end
 
