@@ -21,12 +21,14 @@ end
 powershell_script 'Remove Logs' do
   guard_interpreter :powershell_script
   code <<-EOH
-  Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
+  Remove-Item "C:\\NC4\\MC3\\HTTPD\\error" -recurse
+  EOH
   only_if "Dir.exist?('C:\\NC4\\MC3\\HTTPD\\error')"
 
-  Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
-  only_if "Dir.exist?('C:\\NC4\\MC3\\HTTPD\\logs')"
+  code <<-EOH
+  Remove-Item "C:\\NC4\\MC3\\HTTPD\\logs" -recurse
   EOH
+  only_if "Dir.exist?('C:\\NC4\\MC3\\HTTPD\\logs')"
 end
 
 #execute "Remove Logs" do
