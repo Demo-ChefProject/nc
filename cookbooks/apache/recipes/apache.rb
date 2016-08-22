@@ -19,9 +19,12 @@ execute "Unzip Apache package" do
 end
 
 execute "Remove Logs" do
-  command 'cd #node{["nc4"]["apache"]["workdir"]}'
-  command 'RD /S /Q #node{["nc4"]["apache"]["logdir"]}'
-  command 'RD /S /Q #node{["nc4"]["apache"]["workdir"]}\errors'
+  #command 'cd #node{["nc4"]["apache"]["workdir"]}'
+  command 'cd C:\\NC4\\MC3\\HTTPD'
+  #command 'RD /S /Q #node{["nc4"]["apache"]["logdir"]}'
+  command 'RD /S /Q C:\\NC4\\MC3\\logs'
+  #command 'RD /S /Q #node{["nc4"]["apache"]["workdir"]}\errors'
+  command 'RD /S /Q C:\\NC4\\MC3\\HTTPD\errors'
 end
 
 
