@@ -5,10 +5,9 @@ apache_download_location = "#{node['nc4']['nexus']['url']}#{node['nc4']['apache-
 remote_file 'C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip' do
   source 'http://54.175.158.124:8081/repository/Rigil/apache-httpd-32-2.2.32.zip'
   action :create
-#end
   notifies :run, 'execute[Unzip Apache package]', :immediately
   #notifies :run, 'execute[create-yum-cache]', :immediately
-#  not_if {file.directory?('D:\NC4\MC3')}
+  #not_if {file.directory?('D:\NC4\MC3')}
 end
 
 powershell_script 'Unzip Apache package' do
@@ -26,12 +25,12 @@ powershell_script 'Remove logs' do
   EOH
 end
 
-execute "Unzip Apache package" do
+#execute "Unzip Apache package" do
   #command 'cd C:\Program Files\7-Zip'
-  command 'powershell.exe -nologo -noprofile -command "&{ Add-Type -A "System.IO.Compression.FileSystem"; [IO.Compression.ZipFile]::ExtractToDirectory("apache-httpd-32-2.2.32.zip", "C:\\NC4\\MC3\\"); }" '
+  #command 'powershell.exe -nologo -noprofile -command "&{ Add-Type -A "System.IO.Compression.FileSystem"; [IO.Compression.ZipFile]::ExtractToDirectory("apache-httpd-32-2.2.32.zip", "C:\\NC4\\MC3\\"); }" '
   #command 'unzip #{node["nc4"]["apache-httpd-32"]["package"]} #node{["nc4"]["apache"]["workdir"]}'
-  notifies :run, "execute[Remove Logs]", :immediately
-end
+  #notifies :run, "execute[Remove Logs]", :immediately
+#end
 
 #execute "Remove Logs" do
   #command 'cd #node{["nc4"]["apache"]["workdir"]}'
