@@ -47,7 +47,7 @@ end
 #end
 
 #template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
-template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
+template 'C:\NC4\MC3\HTTPD\conf\httpd.conf' do
   #source 'httpd.erb'
   path '#node{["nc4"]["httpd-erb"]["url"]}'
   variables( :server_name => '#node{["nc4"]["server_name"]}')
