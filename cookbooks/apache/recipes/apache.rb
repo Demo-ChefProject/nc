@@ -10,7 +10,6 @@ remote_file 'C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip' do
   #not_if {file.directory?('D:\NC4\MC3')}
 end
 
-
 powershell_script 'Unzip Apache package' do
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD -recurse
@@ -19,12 +18,21 @@ powershell_script 'Unzip Apache package' do
   notifies :run, 'powershell_script[Remove Logs]', :immediately
 end
 
-
 powershell_script 'Remove Logs' do
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
   Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
   EOH
+end
+
+# Testing code for folder exists or not
+unless C:\\NC4\\MC3\\HTTPD\\error.exist? "C:\\NC4\\MC3\\HTTPD\\error"
+windows_batch "error and logs" do
+code <<-EOH
+
+C:\\NC4\\MC3\\HTTPD\\error
+EOH
+end
 end
 
  #execute powershell_script "Unzip Apache package"
