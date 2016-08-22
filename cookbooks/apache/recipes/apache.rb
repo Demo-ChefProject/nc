@@ -38,9 +38,9 @@ end
   #command 'RD /S /Q #node{["nc4"]["apache"]["workdir"]}\errors'
 #end
 
-file 'C:\NC4\MC3\HTTPD\conf\extra' do
+file 'C:\\NC4\\MC3\\HTTPD\\conf\\extra\\httpd-vhosts.conf\\MC3AgileDev.conf' do
 #file '#node{["nc4"]["mc3agiledev-conf"]["url"]}'   do
-  path "C:\\NC4\\MC3\\HTTPD\\conf\\extra\\httpd-vhosts.conf\\MC3AgileDev.con"
+  path "C:\\NC4\\MC3\\HTTPD\\conf\\extra\\httpd-vhosts.conf\\MC3AgileDev.conf"
  action :create
 end
 
