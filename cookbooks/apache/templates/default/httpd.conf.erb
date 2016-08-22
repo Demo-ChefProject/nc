@@ -51,7 +51,7 @@ Group daemon
 
 ServerAdmin ops@nc4.us
 ServerName testcert.nc4mc.com
-DocumentRoot "D:/NC4/HTTPD/http"
+DocumentRoot "C:/NC4/MC3/HTTPD/http"
 
 <Directory />
     Options FollowSymLinks
@@ -59,7 +59,7 @@ DocumentRoot "D:/NC4/HTTPD/http"
     Require all denied
 </Directory>
 
-<Directory "D:/NC4/HTTPD/http">
+<Directory "C:/NC4/MC3/HTTPD/http">
     Options Indexes FollowSymLinks
     AllowOverride None
     Require all granted
@@ -95,8 +95,8 @@ DocumentRoot "D:/NC4/HTTPD/http"
 # container, that host's errors will be logged there and not here.
 #
 #ErrorLog "logs/httpd_error.log"
-#ErrorLog "|D:/Nc4/HTTPD/bin/rotatelogs.exe D:/Nc4/HTTPD/Logs/<%= @server_name %>_error%Y-%m-%d.log 86400"
-ErrorLog "|D:/Nc4/HTTPD/bin/rotatelogs.exe D:/Nc4/HTTPD/Logs/<%= @server_name %>_error.%Y-%m-%d.log 86400"
+#ErrorLog "|C:/Nc4/MC3/HTTPD/bin/rotatelogs.exe D:/Nc4/HTTPD/Logs/<%= @server_name %>_error%Y-%m-%d.log 86400"
+ErrorLog "|C:/Nc4/MC3/HTTPD/bin/rotatelogs.exe D:/Nc4/HTTPD/Logs/<%= @server_name %>_error.%Y-%m-%d.log 86400"
 
 #
 # LogLevel: Control the number of messages logged to the error_log.
@@ -119,8 +119,8 @@ LogLevel warn
     </IfModule>
 
 	#CustomLog "logs/httpd_access.log" common
-#CustomLog "|D:/NC4/HTTPD/bin/rotatelogs.exe D:/NC4/HTTPD/Logs/<%= @server_name %>%Y-%m-%d.log 86400" common
-CustomLog "|D:/NC4/HTTPD/bin/rotatelogs.exe D:/NC4/HTTPD/Logs/<%= @server_name %>_access.%Y-%m-%d.log 86400" combined
+#CustomLog "|C:/NC4/HTTPD/bin/rotatelogs.exe D:/NC4/HTTPD/Logs/<%= @server_name %>%Y-%m-%d.log 86400" common
+CustomLog "|C:/NC4/MC3/HTTPD/bin/rotatelogs.exe D:/NC4/HTTPD/Logs/<%= @server_name %>_access.%Y-%m-%d.log 86400" combined
 </IfModule>
 
 <IfModule alias_module>
