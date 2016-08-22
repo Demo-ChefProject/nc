@@ -39,12 +39,12 @@ end
 #end
 
 
-file 'C:\NC4\MC3\HTTPD\conf\extra\MC3AgileDev.conf' do
+#file 'C:\NC4\MC3\HTTPD\conf\extra\MC3AgileDev.conf' do
 #file '#node{["nc4"]["mc3agiledev-conf"]["url"]}'   do
-  source "httpd-vhosts.conf"
+  #source "httpd-vhosts.conf"
 #  action :'#node{["nc4"]["httpd-vhost-conf"]["url"]}'
-  action :create
-end
+  #action :create
+#end
 
 powershell_script 'Remove httpd.conf' do
   code <<-EOH
@@ -53,7 +53,7 @@ powershell_script 'Remove httpd.conf' do
 end
 
 #template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
-template 'C:\NC4\MC3\HTTPD\conf\httpd.conf' do
+template 'C:\\NC4\\MC3\\HTTPD\\conf\\httpd.conf' do
   source 'httpd.conf.erb'
   #source '#node{["nc4"]["httpd-erb"]["url"]}'
   variables( :server_name => 'MC3AgileDev')
