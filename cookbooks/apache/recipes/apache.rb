@@ -11,6 +11,13 @@ remote_file 'C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip' do
 #  not_if {file.directory?('D:\NC4\MC3')}
 end
 
+powershell_script 'write-to-interpolated-path' do
+  code <<-EOH
+  powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip', 'C:/NC4/MC3'); }"
+  EOH
+end
+
+
 execute "Unzip Apache package" do
   #command 'cd C:\Program Files\7-Zip'
   command 'powershell.exe -nologo -noprofile -command "&{ Add-Type -A "System.IO.Compression.FileSystem"; [IO.Compression.ZipFile]::ExtractToDirectory("apache-httpd-32-2.2.32.zip", "C:\\NC4\\MC3\\"); }" '
@@ -19,12 +26,9 @@ execute "Unzip Apache package" do
 end
 
 execute "Remove Logs" do
-  #command 'cd #node{["nc4"]["apache"]["workdir"]}'
-  command 'cd C:\\NC4\\MC3\\HTTPD'
-  #command 'RD /S /Q #node{["nc4"]["apache"]["logdir"]}'
-  command 'RD /S /Q C:\\NC4\\MC3\\logs'
-  #command 'RD /S /Q #node{["nc4"]["apache"]["workdir"]}\errors'
-  command 'RD /S /Q C:\\NC4\\MC3\\HTTPD\errors'
+  command 'cd #node{["nc4"]["apache"]["workdir"]}'
+  command 'RD /S /Q #node{["nc4"]["apache"]["logdir"]}'
+  command 'RD /S /Q #node{["nc4"]["apache"]["workdir"]}\errors'
 end
 
 
