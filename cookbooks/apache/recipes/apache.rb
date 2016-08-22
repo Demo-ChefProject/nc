@@ -50,7 +50,7 @@ end
 template 'C:\NC4\MC3\HTTPD\conf\httpd.conf' do
   source 'httpd.erb'
   #source '#node{["nc4"]["httpd-erb"]["url"]}'
-  variables( :server_name => ''MC3AgileDev'')
+  variables( :server_name => 'MC3AgileDev')
 end
 
 execute 'Create Windows service for Apache' do
