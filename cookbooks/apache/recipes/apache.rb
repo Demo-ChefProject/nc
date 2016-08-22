@@ -10,12 +10,14 @@ remote_file 'C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip' do
   #not_if {file.directory?('D:\NC4\MC3')}
 end
 
+execute powershell_script "Unzip Apache package" do
 powershell_script 'Unzip Apache package' do
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD -recurse
   powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip', 'C:/NC4/MC3'); }"
   EOH
   notifies :run, "powershell_script[Remove Logs]", :immediately
+end
 end
 
 powershell_script 'Remove logs' do
@@ -25,7 +27,7 @@ powershell_script 'Remove logs' do
   EOH
 end
 
-#execute "Unzip Apache package" do
+
   #command 'cd C:\Program Files\7-Zip'
   #command 'powershell.exe -nologo -noprofile -command "&{ Add-Type -A "System.IO.Compression.FileSystem"; [IO.Compression.ZipFile]::ExtractToDirectory("apache-httpd-32-2.2.32.zip", "C:\\NC4\\MC3\\"); }" '
   #command 'unzip #{node["nc4"]["apache-httpd-32"]["package"]} #node{["nc4"]["apache"]["workdir"]}'
