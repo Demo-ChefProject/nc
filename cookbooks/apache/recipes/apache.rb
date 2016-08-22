@@ -41,8 +41,7 @@ end
 file 'C:\NC4\MC3\HTTPD\conf\extra' do
 #file '#node{["nc4"]["mc3agiledev-conf"]["url"]}'   do
   path "C:\\NC4\\MC3\\HTTPD\\conf\\extra\\httpd-vhosts.conf\\MC3AgileDev.con"
-  action :'httpd-vhost.conf'
-  #action :create
+ action :create
 end
 
 #template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
