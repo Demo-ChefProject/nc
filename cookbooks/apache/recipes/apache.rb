@@ -22,6 +22,7 @@ powershell_script 'Remove logs' do
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
   Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
+  notifies :run, "powershell_script[Remove httpd.conf]", :immediately
   EOH
 end
 
@@ -45,6 +46,12 @@ end
 #  action :'#node{["nc4"]["httpd-vhost-conf"]["url"]}'
 #  action :create
 #end
+
+powershell_script 'Remove httpd.conf' do
+  code <<-EOH
+  Remove-Item C:\\NC4\\MC3\\HTTPD\\conf -recurse
+  EOH
+end
 
 #template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
 template 'C:\NC4\MC3\HTTPD\conf\httpd.conf' do
