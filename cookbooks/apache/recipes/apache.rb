@@ -46,7 +46,7 @@ file '#node{["nc4"]["mc3agiledev-conf"]["url"]}'   do
 end
 
 #template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
-template 'C:\NC4\MC3\HTTPD\conf\httpd.conf\httpd.conf.erb' do
+template 'C:\NC4\MC3\HTTPD\conf\httpd.conf' do
   source 'httpd.conf.erb'
   #source '#node{["nc4"]["httpd-erb"]["url"]}'
   variables( :server_name => 'MC3AgileDev')
