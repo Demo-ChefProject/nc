@@ -7,7 +7,7 @@ default['nc4']['apache-httpd-32']['package']="/apache-httpd-32-2.2.32.zip"
 #Apache install location variables
 default['nc4']['apache']['install_location'] = "C:\\NC4\\MC3"
 default['nc4']['apache']['workdir'] = "C:\\NC4\\MC3\\HTTPD"
-default['nc4']['apache']['logdir'] = "c:\\NC4\\MC3\\logs"
+default['nc4']['apache']['logdir'] = "C:\\NC4\\MC3\\logs"
 
 #Newly added
 default['nc4']['apache']['bindir'] = "C:\NC4\HTTPD\bin"
