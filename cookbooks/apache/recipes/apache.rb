@@ -33,11 +33,11 @@ execute "Unzip Apache package" do
   notifies :run, "execute[Remove Logs]", :immediately
 end
 
-execute "Remove Logs" do
-  command 'cd #node{["nc4"]["apache"]["workdir"]}'
-  command 'RD /S /Q #node{["nc4"]["apache"]["logdir"]}'
-  command 'RD /S /Q #node{["nc4"]["apache"]["workdir"]}\errors'
-end
+#execute "Remove Logs" do
+  #command 'cd #node{["nc4"]["apache"]["workdir"]}'
+  #command 'RD /S /Q #node{["nc4"]["apache"]["logdir"]}'
+  #command 'RD /S /Q #node{["nc4"]["apache"]["workdir"]}\errors'
+#end
 
 
 #file 'C:\NC4\MC3\HTTPD\conf\extra\MC3AgileDev.conf' do
