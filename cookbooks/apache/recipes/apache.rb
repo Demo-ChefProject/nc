@@ -13,7 +13,7 @@ end
 
 execute "Unzip Apache package" do
   command 'cd C:\Program Files\7-Zip'
-  command 'powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('apache-httpd-32-2.2.32.zip', 'C:\NC4\MC3\'); }"'
+  command 'powershell.exe -nologo -noprofile -command "& { Add-Type -A "System.IO.Compression.FileSystem"; [IO.Compression.ZipFile]::ExtractToDirectory("apache-httpd-32-2.2.32.zip", "C:\NC4\MC3\"); }"'
   #command 'unzip #{node["nc4"]["apache-httpd-32"]["package"]} #node{["nc4"]["apache"]["workdir"]}'
   notifies :run, "execute[Remove Logs]", :immediately
 end
