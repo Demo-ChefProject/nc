@@ -11,10 +11,11 @@ remote_file 'C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip' do
 #  not_if {file.directory?('D:\NC4\MC3')}
 end
 
-powershell_script 'write-to-interpolated-path' do
+powershell_script 'Unzip Apache package' do
   code <<-EOH
   powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip', 'C:/NC4/MC3'); }"
   EOH
+  notifies :run, "execute[Remove Logs]", :immediately
 end
 
 
