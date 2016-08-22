@@ -16,7 +16,7 @@ powershell_script 'Unzip Apache package' do
   Remove-Item C:\\NC4\\MC3\\HTTPD -recurse
   powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip', 'C:/NC4/MC3'); }"
   EOH
-  notifies :run, "powershell_script[Remove Logs]", :immediately
+  notifies :run, 'powershell_script[Remove Logs]', :immediately
 end
 
 
