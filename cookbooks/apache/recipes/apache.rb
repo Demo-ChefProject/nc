@@ -19,12 +19,13 @@ powershell_script 'Unzip Apache package' do
 end
 
 powershell_script 'Remove Logs' do
+  guard_interpreter :powershell_script
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
-  only_if { Dir.exist? ("C:\\NC4\\MC3\\HTTPD\\error") }
+  only_if "Dir.exist?('C:\\NC4\\MC3\\HTTPD\\error')"
 
   Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
-  only_if { Dir.exist? ("C:\\NC4\\MC3\\HTTPD\\logs") }
+  only_if "Dir.exist?('C:\\NC4\\MC3\\HTTPD\\logs')"
   EOH
 end
 
