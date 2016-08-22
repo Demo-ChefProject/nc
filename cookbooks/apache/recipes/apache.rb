@@ -21,8 +21,8 @@ end
 
 powershell_script 'Remove logs' do
   code <<-EOH
-  Remove-Item C:\NC4\MC3\HTTPD\error -recurse
-  Remove-Item C:\NC4\MC3\HTTPD\logs -recurse
+  Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
+  Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
   EOH
 end
 
