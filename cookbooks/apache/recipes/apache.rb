@@ -21,26 +21,12 @@ end
 powershell_script 'Remove Logs' do
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
+  only_if { Dir.exist? ("C:\\NC4\\MC3\\HTTPD\\error") }
+
   Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
+  only_if { Dir.exist? ("C:\\NC4\\MC3\\HTTPD\\logs") }
   EOH
 end
-
-# Testing code for folder exists or not
-unless C:\\NC4\\MC3\\HTTPD\\error.exist? "C:\\NC4\\MC3\\HTTPD\\error"
-windows_batch "error and logs" do
-code <<-EOH
-
-C:\\NC4\\MC3\\HTTPD\\error
-EOH
-end
-end
-
- #execute powershell_script "Unzip Apache package"
-  #command 'cd C:\Program Files\7-Zip'
-  #command 'powershell.exe -nologo -noprofile -command "&{ Add-Type -A "System.IO.Compression.FileSystem"; [IO.Compression.ZipFile]::ExtractToDirectory("apache-httpd-32-2.2.32.zip", "C:\\NC4\\MC3\\"); }" '
-  #command 'unzip #{node["nc4"]["apache-httpd-32"]["package"]} #node{["nc4"]["apache"]["workdir"]}'
-  #notifies :run, "execute[Remove Logs]", :immediately
-#end
 
 #execute "Remove Logs" do
   #command 'cd #node{["nc4"]["apache"]["workdir"]}'
@@ -54,17 +40,30 @@ file 'C:\\NC4\\MC3\\HTTPD\\conf\\extra\\httpd-vhosts.conf\\MC3AgileDev.conf' do
  action :create
 end
 
-#template 'D:\NC4\MC3\HTTPD\conf\httpd.conf' do
 template 'C:\NC4\MC3\HTTPD\conf\httpd.conf' do
   source 'httpd.conf.erb'
-  #source '#node{["nc4"]["httpd-erb"]["url"]}'
   variables( :server_name => 'MC3AgileDev')
   action :create
 end
 
 execute 'Create Windows service for Apache' do
   #command 'cd D:\NC4\HTTPD\bin'
-  command 'cd #node{["nc4"]["apache"]["bindir"]}'
+  command "cd #node{['nc4']['apache']['bindir']}"
   command 'httpd.exe -k install -n "Apache 2.2 HTTP"'
   command 'sc \\\\server config ServiceName obj= Domain\user password= pass'
+end
+
+powershell_script 'delete_if_exist' do
+  code <<-EOH
+     $Service = Get-WmiObject -Class Win32_Service -Filter "Name='Apache 2.2 HTTP'"
+     if ($Service) {
+        $Service.Delete() 
+     }
+  EOH
+  notifies :run, 'execute[Installing Service Apache]', :immediately
+end
+
+execute 'Installing Service Apache' do
+  command "sc create \'Apache 2.2 HTTP\' binPath= #node{['nc4']['apache']['bindir']}\\httpd.exe"
+  action :nothing
 end
