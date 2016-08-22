@@ -20,7 +20,7 @@ powershell_script 'Unzip Apache package' do
 end
 
 
-powershell_script 'Remove logs' do
+powershell_script 'Remove Logs' do
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
   Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
