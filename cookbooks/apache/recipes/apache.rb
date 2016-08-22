@@ -13,18 +13,25 @@ end
 
 powershell_script 'Unzip Apache package' do
   code <<-EOH
+  Remove-Item C:\NC4\MC3\HTTPD -recurse
   powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip', 'C:/NC4/MC3'); }"
   EOH
   notifies :run, "execute[Remove Logs]", :immediately
 end
 
+powershell_script 'Remove logs' do
+  code <<-EOH
+  Remove-Item C:\NC4\MC3\HTTPD\error -recurse
+  Remove-Item C:\NC4\MC3\HTTPD\logs -recurse
+  EOH
+end
 
-#execute "Unzip Apache package" do
+execute "Unzip Apache package" do
   #command 'cd C:\Program Files\7-Zip'
- # command 'powershell.exe -nologo -noprofile -command "&{ Add-Type -A "System.IO.Compression.FileSystem"; [IO.Compression.ZipFile]::ExtractToDirectory("apache-httpd-32-2.2.32.zip", "C:\\NC4\\MC3\\"); }" '
+  command 'powershell.exe -nologo -noprofile -command "&{ Add-Type -A "System.IO.Compression.FileSystem"; [IO.Compression.ZipFile]::ExtractToDirectory("apache-httpd-32-2.2.32.zip", "C:\\NC4\\MC3\\"); }" '
   #command 'unzip #{node["nc4"]["apache-httpd-32"]["package"]} #node{["nc4"]["apache"]["workdir"]}'
-  #notifies :run, "execute[Remove Logs]", :immediately
-#end
+  notifies :run, "execute[Remove Logs]", :immediately
+end
 
 execute "Remove Logs" do
   command 'cd #node{["nc4"]["apache"]["workdir"]}'
