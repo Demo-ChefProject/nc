@@ -43,15 +43,15 @@ end
 
 template "C:/NC4/MC3/HTTPD/conf/httpd-vhost.conf" do
   source 'httpd-vhosts.conf.erb'
-  variables( :server_name => server_name)
+  variables( :server_name => "#{server_name}" )
   action :create
 end
 
 template "C:/NC4/MC3/HTTPD/conf/httpd.conf" do
   source 'httpd.conf.erb'
   variables({ 
-    :server_name => server_name,
-    :work_dir => work_dir
+    :server_name => "#{server_name}",
+    :work_dir => "#{work_dir}"
     })
   action :create
 end
