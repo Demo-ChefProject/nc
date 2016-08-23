@@ -41,13 +41,13 @@ end
 # action :create
 #end
 
-template "#{work_dir}/httpd-vhost.conf" do
+template "C:/NC4/MC3/HTTPD/conf/httpd-vhost.conf" do
   source 'httpd-vhosts.conf.erb'
   variables( :server_name => server_name)
   action :create
 end
 
-template "#{work_dir}/httpd.conf" do
+template "C:/NC4/MC3/HTTPD/conf/httpd.conf" do
   source 'httpd.conf.erb'
   variables({ 
     :server_name => server_name,
