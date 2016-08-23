@@ -15,7 +15,8 @@ end
 
 powershell_script 'Unzip Apache package' do
   code <<-EOH
-  Remove-Item #{apache_work_dir} -recurse
+  
+  Remove-Item C:\\NC4\\MC3\\HTTPD -recurse
   powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip', 'C:/NC4/MC3'); }"
   EOH
 #  only_if "Dir.exist?(#node{['nc4']['apache']['workdir']})"
@@ -27,12 +28,12 @@ powershell_script 'Remove Logs' do
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
   EOH
- # only_if "Dir.exist?(#{node['nc4']['apache']['workdir']}/error)"
+  only_if "Dir.exist?(#{node['nc4']['apache']['workdir']}/error)"
 
   code <<-EOH
   Remove-Item #{node['nc4']['apache']['workdir']}/logs -recurse
   EOH
- # only_if "Dir.exist?(C:\\NC4\\MC3\\HTTPD\\logs)"
+  only_if "Dir.exist?(C:\\NC4\\MC3\\HTTPD\\logs)"
 end
 
 #file 'C:\\NC4\\MC3\\HTTPD\\conf\\extra\\MC3AgileDev.conf' do
