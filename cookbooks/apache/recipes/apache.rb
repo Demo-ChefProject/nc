@@ -8,13 +8,9 @@ apache_work_dir = "#{apache_install_loc}/HTTPD"
 apache_httpd_conf = "#{apache_work_dir}/conf"
 
 #setting guard for execution
-not_if do File.exist?("C:/Windows/temp/execution.log")
-
-  #setting guard for execution
-  file "C:/Windows/temp/execution.log" do
-    content "RUNNING"
-    action :create
-  end
+file "C:/Windows/temp/execution.log" do
+  action :create
+end
 
   #Download the Apache zip file
   remote_file "#{apache_install_loc}/#{apache_package_name}" do
@@ -99,4 +95,3 @@ not_if do File.exist?("C:/Windows/temp/execution.log")
   file "C:/Windows/temp/execution.log" do
     action :delete
   end
-end
