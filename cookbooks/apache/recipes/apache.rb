@@ -1,6 +1,9 @@
 
 #apache_download_location = "#{node['nc4']['nexus']['url']}#{node['nc4']['apache-httpd-32']['version']}#{node['nc4']['apache-httpd-32']['package']}"
 apache_download_location = "http://54.175.158.124:8081/repository/Rigil/apache-httpd-32-2.2.32.zip"
+server_name = "#node{['nc4']['server_name']}"
+work_dir    = "#node{['nc4']['apache']['workdir']}"
+httpd_conf  = "#node{['nc4']['httpd-conf']['location']}"
 
 # remote_file "Download Apache Module from nexus" do
 remote_file 'C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip' do
@@ -38,17 +41,17 @@ end
 # action :create
 #end
 
-template 'C:/NC4/MC3/HTTPD/conf/httpd-vhost.conf' do
+template "C:/NC4/MC3/HTTPD/conf/httpd-vhost.conf' do
   source 'httpd-vhosts.conf.erb'
-  variables( :server_name => "#node{['nc4']['server_name']}")
+  variables( :server_name => server_name)
   action :create
 end
 
 template 'C:/NC4/MC3/HTTPD/conf/httpd.conf' do
   source 'httpd.conf.erb'
   variables({ 
-    :server_name => "#node{['nc4']['server_name']}",
-    :work_dir => "#node{['nc4']['apache']['workdir']}"
+    :server_name => server_name,
+    :work_dir => work_dir
     })
   action :create
 end
