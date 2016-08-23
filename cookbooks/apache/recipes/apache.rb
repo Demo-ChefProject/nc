@@ -5,8 +5,8 @@ apache_server_name = <% ['nc4']['server_name'] %>
 apache_work_dir = ['nc4']['apache']['workdir'] 
 apache_httpd_conf = ['nc4']['apache-conf']['location']
 
-template "#{apache_work_dir}\test.xml" do
-  'This is a test file'
+file "#{apache_work_dir}\test.xml" do
+  content 'This is a test file'
 end
 
 template 'node['nc4']['apache']['workdir']\testone.xml' do
