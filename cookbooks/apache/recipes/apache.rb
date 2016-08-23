@@ -41,7 +41,7 @@ end
 # action :create
 #end
 
-template "C:/NC4/MC3/HTTPD/conf/httpd-vhost.conf' do
+template 'C:/NC4/MC3/HTTPD/conf/httpd-vhost.conf' do
   source 'httpd-vhosts.conf.erb'
   variables( :server_name => server_name)
   action :create
@@ -57,7 +57,7 @@ template 'C:/NC4/MC3/HTTPD/conf/httpd.conf' do
 end
 
 #execute 'Create Windows service for Apache' do
-  #command 'cd D:\NC4\HTTPD\bin'
+#command 'cd D:\NC4\HTTPD\bin'
 #  command "cd #node{['nc4']['apache']['bindir']}"
 #  command 'httpd.exe -k install -n "Apache 2.2 HTTP"'
 #  command 'sc \\\\server config ServiceName obj= Domain\user password= pass'
