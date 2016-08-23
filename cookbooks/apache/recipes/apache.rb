@@ -28,7 +28,7 @@ powershell_script 'Remove logs folder' do
     Remove-Item #{apache_work_dir}/logs/* -recurse
   EOH
   only_if do Dir.exist?("#{apache_work_dir}/logs") end
-  notifies :run, 'powershell_script[Remove error folder]', :immediately
+#  notifies :run, 'powershell_script[Remove error folder]', :immediately
 end
 
 #Commented out per feedback from Satvinder
