@@ -4,6 +4,7 @@ apache_download_from = "http://54.175.158.124:8081/repository/Rigil/apache-httpd
 apache_package_name = node['nc4']['apache-httpd-32']['package']
 apache_install_loc = node['nc4']['apache']['install_location']
 apache_server_name = node['nc4']['server_name']
+apache_backup_touch = node['ohai_time']
 apache_work_dir = "#{apache_install_loc}/HTTPD"
 apache_httpd_conf = "#{apache_work_dir}/conf"
 
@@ -23,7 +24,7 @@ end
 powershell_script 'Unzip Apache package' do
   guard_interpreter :powershell_script
   code <<-EOH
-    Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-#{node['ohai_time']}"
+    Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-#{apache_backup_touch}"
     powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('#{apache_install_loc}/#{apache_package_name}', '#{apache_install_loc}'); }"
   EOH
   notifies :run, 'powershell_script[Remove logs folder]', :immediately
