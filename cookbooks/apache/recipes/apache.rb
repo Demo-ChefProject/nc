@@ -22,6 +22,7 @@ powershell_script 'Unzip Apache package' do
     #Remove-Item #{apache_work_dir} -recurse
     powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('#{apache_install_loc}/#{apache_package_name}', '#{apache_install_loc}'); }"
   EOH
+  not_if do Dir.exist?("#{apache_work_dir}-OLD") end
   notifies :run, 'powershell_script[Remove logs folder]', :immediately
 end
 
