@@ -81,7 +81,7 @@ powershell_script 'delete_if_exist' do
 end
 
 execute 'Installing Service Apache' do
- command "sleep 10"
+  command "timeout /T 10"
   command "sc create Apache-HTTPD-2.2 binPath= \"#{apache_work_dir}/bin/httpd.exe\" start= auto DisplayName= \"Apache HTTPD 2.2\""
   action :nothing
 end
