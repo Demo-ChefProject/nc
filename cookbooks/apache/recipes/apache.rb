@@ -5,7 +5,7 @@ apache_server_name = <% ['nc4']['server_name'] %>
 apache_work_dir =<% ['nc4']['apache']['workdir'] %>
 apache_httpd_conf = ['nc4']['apache-conf']['location']
 
-template 'apache_work_dir\test.xml' do
+template "#{apache_work_dir}\test.xml" do
   'This is a test file'
 end
 
