@@ -29,6 +29,8 @@ powershell_script 'Remove Logs' do
   Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
   Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
   echo 'apache_server_name'
+  echo  apache_server_name
+  echo "apache_server_name"
   EOH
   #only_if "Dir.exist?(C:\\NC4\\MC3\\HTTPD\\logs)"
 end
