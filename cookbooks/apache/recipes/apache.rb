@@ -1,18 +1,9 @@
 
 #apache_download_location = "#{node['nc4']['nexus']['url']}#{node['nc4']['apache-httpd-32']['version']}#{node['nc4']['apache-httpd-32']['package']}"
 apache_download_location = "http://54.175.158.124:8081/repository/Rigil/apache-httpd-32-2.2.32.zip"
-apache_server_name = ['nc4']['server_name']
-apache_work_dir = <%= ['nc4']['apache']['workdir'] %> 
-apache_httpd_conf = ['nc4']['apache-conf']['location']
-
-file "#{apache_work_dir}\test.xml" do
-  content 'This is a test file' 
-  action :create
-end
-
-execute "test" do
-  command 'echo "apache_work_dir" '
-end
+apache_server_name = node['nc4']['server_name']
+apache_work_dir = node['nc4']['apache']['workdir']
+apache_httpd_conf = node['nc4']['apache-conf']['location']
 
 remote_file "Download Apache Module from nexus" do
   source apache_download_location
