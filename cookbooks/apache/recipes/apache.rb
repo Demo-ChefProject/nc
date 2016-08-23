@@ -9,10 +9,6 @@ file "#{apache_work_dir}\test.xml" do
   content 'This is a test file'
 end
 
-template 'node['nc4']['apache']['workdir']\testone.xml' do
-  'This is a test file'
-end
-
 # remote_file "Download Apache Module from nexus" do
 remote_file "C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip" do
   source apache_download_location
