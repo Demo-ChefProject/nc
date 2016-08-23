@@ -52,7 +52,7 @@ end
 template 'C:\NC4\MC3\HTTPD\conf\httpd.conf' do
   source 'httpd.conf.erb'
   variables({ 
-    :server_name => "#node{['nc4']['server_name']}"
+    :server_name => "#node{['nc4']['server_name']}",
     :work_dir => "#node{['nc4']['apache']['workdir']}"
     })
   action :create
