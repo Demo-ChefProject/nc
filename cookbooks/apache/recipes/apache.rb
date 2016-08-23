@@ -22,19 +22,14 @@ powershell_script 'Unzip Apache package' do
 end
 
 powershell_script 'Remove Logs' do
-  #guard_interpreter :powershell_script
+  # guard_interpreter :powershell_script
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
   Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
   EOH
-  #only_if "Dir.exist?(C:\\NC4\\MC3\\HTTPD\\logs)"
+  # only_if "Dir.exist?(C:\\NC4\\MC3\\HTTPD\\logs)"
 end
 
-#file 'C:\\NC4\\MC3\\HTTPD\\conf\\extra\\MC3AgileDev.conf' do
-      #file '#node{["nc4"]["mc3agiledev-conf"]["url"]}'   do
-#  path "C:\\NC4\\MC3\\HTTPD\\conf\\extra\\MC3AgileDev.conf"
-# action :create
-#end
 
 template "#{apache_httpd_conf}/httpd-vhost.conf" do
   source 'httpd-vhosts.conf.erb'
