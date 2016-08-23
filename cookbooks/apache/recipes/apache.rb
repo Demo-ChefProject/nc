@@ -81,6 +81,6 @@ powershell_script 'delete_if_exist' do
 end
 
 execute 'Installing Service Apache' do
-  command "echo sc create 'Apache 2.2 HTTP' binPath= #{node['nc4']['apache']['bindir']}/httpd.exe"
+  command "sc create 'Apache 2.2 HTTP' binPath= '#{apache_work_dir}/bin/httpd.exe' start= auto"
   action :nothing
 end
