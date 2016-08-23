@@ -36,7 +36,7 @@ powershell_script 'Remove error folder' do
   code <<-EOH
     Remove-Item #{apache_work_dir}/error -recurse
   EOH
-  only_if Dir.exist?"#{apache_work_dir}/error"
+  only_if do Dir.exist?("#{apache_work_dir}/error") end
 end
 
 
