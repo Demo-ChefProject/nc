@@ -17,12 +17,16 @@ end
 
 #Unzip the installer
 powershell_script 'Unzip Apache package' do
+  guard_interpreter :powershell_script
   code <<-EOH
-    Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-OLD"
-    #Remove-Item #{apache_work_dir} -recurse
+    Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-OLD-CHEF-RUN"
     powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('#{apache_install_loc}/#{apache_package_name}', '#{apache_install_loc}'); }"
   EOH
-  not_if do Dir.exist?("#{apache_work_dir}-OLD") end
+  not_if do Dir.exist?("#{apache_work_dir}-OLD-CHEF-RUN") end
+
+#  code <<-EOH
+#    powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('#{apache_install_loc}/#{apache_package_name}', '#{apache_install_loc}'); }"
+#  EOH
   notifies :run, 'powershell_script[Remove logs folder]', :immediately
 end
 
