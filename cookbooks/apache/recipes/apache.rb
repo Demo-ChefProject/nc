@@ -27,10 +27,6 @@ powershell_script 'Remove Logs' do
   #guard_interpreter :powershell_script
   code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD\\error -recurse
-  EOH
-  #only_if "Dir.exist?(#{node['nc4']['apache']['workdir']}/error)"
-
-  code <<-EOH
   Remove-Item C:\\NC4\\MC3\\HTTPD\\logs -recurse
   EOH
   #only_if "Dir.exist?(C:\\NC4\\MC3\\HTTPD\\logs)"
