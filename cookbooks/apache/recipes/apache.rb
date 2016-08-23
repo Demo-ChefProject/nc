@@ -24,12 +24,9 @@ powershell_script 'Unzip Apache package' do
   guard_interpreter :powershell_script
   code <<-EOH
     Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-#{node['ohai_time']}"
-  EOH
-  only_if do ! Dir.exist?("#{apache_work_dir}-#{node['ohai_time']}") end
-
-  code <<-EOH
     powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('#{apache_install_loc}/#{apache_package_name}', '#{apache_install_loc}'); }"
   EOH
+  only_if do ! Dir.exist?("#{apache_work_dir}-#{node['ohai_time']}") end
   notifies :run, 'powershell_script[Remove logs folder]', :immediately
 end
 
