@@ -2,9 +2,7 @@
 #apache_download_location = "#{node['nc4']['nexus']['url']}#{node['nc4']['apache-httpd-32']['version']}#{node['nc4']['apache-httpd-32']['package']}"
 apache_download_location = "http://54.175.158.124:8081/repository/Rigil/apache-httpd-32-2.2.32.zip"
 apache_server_name = node['nc4']['server_name']
-#apache_work_dir = node['nc4']['apache']['workdir']
 apache_work_dir = "#{node['nc4']['apache']['install_location']}/HTTPD"
-#apache_httpd_conf = node['nc4']['apache-conf']['location']
 apache_httpd_conf = "#{apache_work_dir}/conf"
 
 remote_file "Download Apache Module from nexus" do
@@ -40,6 +38,11 @@ end
 #  only_if do Dir.exist?("#{apache_work_dir}/error") end
 #end
 
+cookbook_file "#{apache_httpd_conf}/extra/#{apache_server_name}.conf" do
+  source 'server_name.conf'
+  action :create
+end
+
 template "#{apache_httpd_conf}/httpd-vhost.conf" do
   source 'httpd-vhosts.conf.erb'
   variables( :server_name => apache_server_name )
@@ -72,11 +75,4 @@ powershell_script 'install Apache service if not exists' do
           sc create Apache-HTTPD-2.2 binPath= \"#{apache_work_dir}/bin/httpd.exe\" start= auto DisplayName= \"Apache HTTPD 2.2\"
      }
   EOH
-#  notifies :run, 'execute[Installing Service Apache]', :immediately
 end
-
-#execute 'Installing Service Apache' do
-#  command "timeout /T 10"
-#  command "sc create Apache-HTTPD-2.2 binPath= \"#{apache_work_dir}/bin/httpd.exe\" start= auto DisplayName= \"Apache HTTPD 2.2\""
-#  action :nothing
-#end
