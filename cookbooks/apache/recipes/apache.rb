@@ -72,7 +72,7 @@ end
 
 powershell_script 'delete_if_exist' do
   code <<-EOH
-     $Service = Get-WmiObject -Class Win32_Service -Filter "Name='Apache 2.2 HTTP'"
+     $Service = Get-WmiObject -Class Win32_Service -Filter 'Name="Apache 2.2 HTTP"'
      if ($Service) {
         $Service.Delete() 
      }
@@ -81,6 +81,6 @@ powershell_script 'delete_if_exist' do
 end
 
 execute 'Installing Service Apache' do
-  command "sc create 'Apache 2.2 HTTP' binPath= '#{apache_work_dir}/bin/httpd.exe' start= auto"
+  command 'sc create "Apache 2.2 HTTP" binPath= "#{apache_work_dir}/bin/httpd.exe" start= auto'
   action :nothing
 end
