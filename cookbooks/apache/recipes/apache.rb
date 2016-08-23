@@ -1,20 +1,26 @@
 
-#apache_download_location = "#{node['nc4']['nexus']['url']}#{node['nc4']['apache-httpd-32']['version']}#{node['nc4']['apache-httpd-32']['package']}"
-apache_download_location = "http://54.175.158.124:8081/repository/Rigil/apache-httpd-32-2.2.32.zip"
+#apache_download_from = "#{node['nc4']['nexus']['url']}#{node['nc4']['apache-httpd-32']['version']}#{node['nc4']['apache-httpd-32']['package']}"
+apache_download_from = "http://54.175.158.124:8081/repository/Rigil/apache-httpd-32-2.2.32.zip"
+apache_package_name = node['nc4']['apache-httpd-32']['package']
+apache_install_loc = node['nc4']['apache']['install_location']
 apache_server_name = node['nc4']['server_name']
-apache_work_dir = "#{node['nc4']['apache']['install_location']}/HTTPD"
+apache_work_dir = "#{apache_install_loc}/HTTPD"
 apache_httpd_conf = "#{apache_work_dir}/conf"
 
-remote_file "Download Apache Module from nexus" do
-  source apache_download_location
+
+#Download the Apache zip file
+remote_file "#{apache_install_loc}/#{apache_package_name}" do
+  source apache_download_from
   action :create
   notifies :run, 'powershell_script[Unzip Apache package]', :immediately
 end
 
+#Unzip the installer
 powershell_script 'Unzip Apache package' do
   code <<-EOH
-  Remove-Item #{apache_work_dir} -recurse
-  powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip', 'C:/NC4/MC3'); }"
+    Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-OLD"
+    #Remove-Item #{apache_work_dir} -recurse
+    powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory(#{apache_install_loc}/#{apache_package_name}, #{apache_install_loc}); }"
   EOH
   notifies :run, 'powershell_script[Remove logs folder]', :immediately
 end
