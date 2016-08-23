@@ -15,7 +15,8 @@ end
 
 powershell_script 'Unzip Apache package' do
   code <<-EOH
-  Remove-Item "#{apache_work_dir}" -recurse
+  
+  Remove_Item C:\NC4\MC3\HTTPD\logs -recurse
   powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip', 'C:/NC4/MC3'); }"
   EOH
 #  only_if "Dir.exist?(#node{['nc4']['apache']['workdir']})"
