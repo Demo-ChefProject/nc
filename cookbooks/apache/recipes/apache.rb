@@ -72,7 +72,7 @@ end
 
 powershell_script 'delete_if_exist' do
   code <<-EOH
-     $Service = Get-WmiObject -Class Win32_Service -Filter 'Name="Apache 2.2 HTTP"'
+     $Service = Get-WmiObject -Class Win32_Service -Filter 'Name="Apache-HTTPD-2.2"'
      if ($Service) {
         $Service.Delete() 
      }
