@@ -25,9 +25,12 @@ powershell_script 'Remove Logs' do
   guard_interpreter :powershell_script
   code <<-EOH
   Remove-Item #{node['nc4']['apache']['workdir']}/error -recurse
-only_if "Dir.exist?(#{node['nc4']['apache']['workdir']}/error')"
-  EOH
-  #Remove-Item #{node['nc4']['apache']['workdir']}/logs -recurse
+  only_if "Dir.exist?(#{node['nc4']['apache']['workdir']}/error')"
+EOH
+  code <<-EOH
+  Remove-Item #{node['nc4']['apache']['workdir']}/logs -recurse
+  only_if "Dir.exist?(#{node['nc4']['apache']['workdir']}/logs)"
+EOH
 end
 
 =begin
