@@ -6,7 +6,7 @@ work_dir    = "#node{['nc4']['apache']['workdir']}"
 httpd_conf  = "#node{['nc4']['httpd-conf']['location']}"
 
 # remote_file "Download Apache Module from nexus" do
-remote_file 'C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip' do
+remote_file "C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip" do
   source apache_download_location
   action :create
   notifies :run, 'powershell_script[Unzip Apache package]', :immediately
