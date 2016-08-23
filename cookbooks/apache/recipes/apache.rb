@@ -3,7 +3,7 @@
 apache_download_location = "http://54.175.158.124:8081/repository/Rigil/apache-httpd-32-2.2.32.zip"
 apache_server_name = node{['nc4']['server_name']}
 apache_work_dir = node{['nc4']['apache']['workdir']}
-httpd_conf = node{['nc4']['apache-conf']['location']}
+apache_httpd_conf = node{['nc4']['apache-conf']['location']}
 
 # remote_file "Download Apache Module from nexus" do
 remote_file "C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip" do
@@ -41,27 +41,20 @@ end
 # action :create
 #end
 
-template "C:/NC4/MC3/HTTPD/conf/httpd-vhost.conf" do
+template "#{apache_httpd_conf}/httpd-vhost.conf" do
   source 'httpd-vhosts.conf.erb'
-  variables( :server_name => "#{apache_server_name}" )
+  variables( :server_name => apache_server_name )
   action :create
 end
 
-template "C:/NC4/MC3/HTTPD/conf/httpd.conf" do
+template "#{apache_httpd_conf}/httpd.conf" do
   source 'httpd.conf.erb'
   variables({ 
-    :server_name => "#{apache_server_name}",
-    :work_dir => "#{apache_work_dir}"
+    :server_name => apache_server_name,
+    :work_dir => apache_work_dir
     })
   action :create
 end
-
-#execute 'Create Windows service for Apache' do
-#command 'cd D:\NC4\HTTPD\bin'
-#  command "cd #node{['nc4']['apache']['bindir']}"
-#  command 'httpd.exe -k install -n "Apache 2.2 HTTP"'
-#  command 'sc \\\\server config ServiceName obj= Domain\user password= pass'
-#end
 
 powershell_script 'delete_if_exist' do
   code <<-EOH
