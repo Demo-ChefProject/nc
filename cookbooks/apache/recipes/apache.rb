@@ -1,9 +1,9 @@
 
 #apache_download_location = "#{node['nc4']['nexus']['url']}#{node['nc4']['apache-httpd-32']['version']}#{node['nc4']['apache-httpd-32']['package']}"
 apache_download_location = "http://54.175.158.124:8081/repository/Rigil/apache-httpd-32-2.2.32.zip"
-apache_server_name = node{['nc4']['server_name']}
-apache_work_dir = node{['nc4']['apache']['workdir']}
-apache_httpd_conf = node{['nc4']['apache-conf']['location']}
+apache_server_name = node['nc4']['server_name']
+apache_work_dir = node['nc4']['apache']['workdir']
+apache_httpd_conf = node['nc4']['apache-conf']['location']
 
 # remote_file "Download Apache Module from nexus" do
 remote_file "C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip" do
@@ -15,7 +15,7 @@ end
 
 powershell_script 'Unzip Apache package' do
   code <<-EOH
-  Remove-Item "C:/NC4/MC3/HTTPD" -recurse
+  Remove-Item "#{apache_work_dir}" -recurse
   powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('C:/NC4/MC3/apache-httpd-32-2.2.2.32.zip', 'C:/NC4/MC3'); }"
   EOH
 #  only_if "Dir.exist?(#node{['nc4']['apache']['workdir']})"
@@ -67,6 +67,6 @@ powershell_script 'delete_if_exist' do
 end
 
 execute 'Installing Service Apache' do
-  command "echo sc create 'Apache 2.2 HTTP' binPath= #node{['nc4']['apache']['bindir']}/httpd.exe"
+  command "echo sc create 'Apache 2.2 HTTP' binPath= #{node['nc4']['apache']['bindir']}/httpd.exe"
   action :nothing
 end
