@@ -38,13 +38,13 @@ end
 # action :create
 #end
 
-template '#node{['nc4']['httpd-conf']['location']}/httpd-vhost.conf' do
+template "#node{['nc4']['httpd-conf']['location']}/httpd-vhost.conf" do
   source 'httpd-vhosts.conf.erb'
   variables( :server_name => "#node{['nc4']['server_name']}")
   action :create
 end
 
-template '#node{['nc4']['httpd-conf']['location']}/httpd.conf' do
+template "#node{['nc4']['httpd-conf']['location']}/httpd.conf" do
   source 'httpd.conf.erb'
   variables({ 
     :server_name => "#node{['nc4']['server_name']}",
