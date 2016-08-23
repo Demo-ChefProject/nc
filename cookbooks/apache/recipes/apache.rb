@@ -8,90 +8,90 @@ apache_work_dir = "#{apache_install_loc}/HTTPD"
 apache_httpd_conf = "#{apache_work_dir}/conf"
 
 #setting guard for execution
-file "C:/Windows/temp/execution.log" do
+#file "C:/Windows/temp/execution.log" do
+#  action :create
+#end
+
+#Download the Apache zip file
+remote_file "#{apache_install_loc}/#{apache_package_name}" do
+  source apache_download_from
+  action :create
+  notifies :run, 'powershell_script[Unzip Apache package]', :immediately
+end
+
+#Unzip the installer
+powershell_script 'Unzip Apache package' do
+  guard_interpreter :powershell_script
+  code <<-EOH
+    Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-OLD-CHEF-RUN"
+  EOH
+  only_if do ! Dir.exist?("#{apache_work_dir}-OLD-CHEF-RUN") end
+
+  code <<-EOH
+    powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('#{apache_install_loc}/#{apache_package_name}', '#{apache_install_loc}'); }"
+  EOH
+  notifies :run, 'powershell_script[Remove logs folder]', :immediately
+end
+
+
+powershell_script 'Remove logs folder' do
+  guard_interpreter :powershell_script
+  code <<-EOH
+    Remove-Item #{apache_work_dir}/logs/* -recurse
+  EOH
+  only_if do Dir.exist?("#{apache_work_dir}/logs") end
+#  notifies :run, 'powershell_script[Remove error folder]', :immediately
+end
+
+#Commented out per feedback from Satvinder
+#powershell_script 'Remove error folder' do
+#  guard_interpreter :powershell_script
+#  code <<-EOH
+#    Remove-Item #{apache_work_dir}/error -recurse
+#  EOH
+#  only_if do Dir.exist?("#{apache_work_dir}/error") end
+#end
+
+cookbook_file "#{apache_httpd_conf}/extra/#{apache_server_name}.conf" do
+  source 'server_name.conf'
   action :create
 end
 
-  #Download the Apache zip file
-  remote_file "#{apache_install_loc}/#{apache_package_name}" do
-    source apache_download_from
-    action :create
-    notifies :run, 'powershell_script[Unzip Apache package]', :immediately
-  end
+template "#{apache_httpd_conf}/httpd-vhost.conf" do
+  source 'httpd-vhosts.conf.erb'
+  variables( :server_name => apache_server_name )
+  action :create
+end
 
-  #Unzip the installer
-  powershell_script 'Unzip Apache package' do
-    guard_interpreter :powershell_script
-    code <<-EOH
-      Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-OLD-CHEF-RUN"
-    EOH
-    only_if do ! Dir.exist?("#{apache_work_dir}-OLD-CHEF-RUN") end
+template "#{apache_httpd_conf}/httpd.conf" do
+  source 'httpd.conf.erb'
+  variables({ 
+    :server_name => apache_server_name,
+    :work_dir => apache_work_dir
+    })
+  action :create
+end
 
-    code <<-EOH
-      powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('#{apache_install_loc}/#{apache_package_name}', '#{apache_install_loc}'); }"
-    EOH
-    notifies :run, 'powershell_script[Remove logs folder]', :immediately
-  end
+#powershell_script 'delete_if_exist' do
+#  code <<-EOH
+#     $Service = Get-WmiObject -Class Win32_Service -Filter 'Name="Apache-HTTPD-2.2"'
+#     if ($Service) {
+#        $Service.Delete() 
+#     }
+#  EOH
+#  notifies :run, 'execute[Installing Service Apache]', :immediately
+#end
 
+powershell_script 'install Apache service if not exists' do
+  code <<-EOH
+     $Service = Get-Service -Name Apache-HTTPD-2.2 -ErrorAction SilentlyContinue
+     if (! $Service) {
+          sc create Apache-HTTPD-2.2 binPath= \"#{apache_work_dir}/bin/httpd.exe\" start= auto DisplayName= \"Apache HTTPD 2.2\"
+     }
+  EOH
+end
 
-  powershell_script 'Remove logs folder' do
-    guard_interpreter :powershell_script
-    code <<-EOH
-      Remove-Item #{apache_work_dir}/logs/* -recurse
-    EOH
-    only_if do Dir.exist?("#{apache_work_dir}/logs") end
-  #  notifies :run, 'powershell_script[Remove error folder]', :immediately
-  end
-
-  #Commented out per feedback from Satvinder
-  #powershell_script 'Remove error folder' do
-  #  guard_interpreter :powershell_script
-  #  code <<-EOH
-  #    Remove-Item #{apache_work_dir}/error -recurse
-  #  EOH
-  #  only_if do Dir.exist?("#{apache_work_dir}/error") end
-  #end
-
-  cookbook_file "#{apache_httpd_conf}/extra/#{apache_server_name}.conf" do
-    source 'server_name.conf'
-    action :create
-  end
-
-  template "#{apache_httpd_conf}/httpd-vhost.conf" do
-    source 'httpd-vhosts.conf.erb'
-    variables( :server_name => apache_server_name )
-    action :create
-  end
-
-  template "#{apache_httpd_conf}/httpd.conf" do
-    source 'httpd.conf.erb'
-    variables({ 
-      :server_name => apache_server_name,
-      :work_dir => apache_work_dir
-      })
-    action :create
-  end
-
-  #powershell_script 'delete_if_exist' do
-  #  code <<-EOH
-  #     $Service = Get-WmiObject -Class Win32_Service -Filter 'Name="Apache-HTTPD-2.2"'
-  #     if ($Service) {
-  #        $Service.Delete() 
-  #     }
-  #  EOH
-  #  notifies :run, 'execute[Installing Service Apache]', :immediately
-  #end
-
-  powershell_script 'install Apache service if not exists' do
-    code <<-EOH
-       $Service = Get-Service -Name Apache-HTTPD-2.2 -ErrorAction SilentlyContinue
-       if (! $Service) {
-            sc create Apache-HTTPD-2.2 binPath= \"#{apache_work_dir}/bin/httpd.exe\" start= auto DisplayName= \"Apache HTTPD 2.2\"
-       }
-    EOH
-  end
-
-  #setting guard for execution
-  file "C:/Windows/temp/execution.log" do
-    action :delete
-  end
+#setting guard for execution
+#file "C:/Windows/temp/execution.log" do
+#  action :delete
+#end
