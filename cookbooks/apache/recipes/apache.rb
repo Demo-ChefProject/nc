@@ -25,18 +25,18 @@ end
 powershell_script 'Remove logs folder' do
   guard_interpreter :powershell_script
   code <<-EOH
-    Remove-Item #{node['nc4']['apache']['workdir']}/logs -recurse
+    Remove-Item #{apache_work_dir}/logs -recurse
   EOH
-  only_if "Dir.exist?(#{node['nc4']['apache']['workdir']}/logs)"
+  only_if Dir.exist?("#{apache_work_dir}/logs")
   notifies :run, 'powershell_script[Remove error folder]', :immediately
 end
 
 powershell_script 'Remove error folder' do
   guard_interpreter :powershell_script
   code <<-EOH
-    Remove-Item #{node['nc4']['apache']['workdir']}/error -recurse
+    Remove-Item #{apache_work_dir}/error -recurse
   EOH
-  only_if "Dir.exist?(#{node['nc4']['apache']['workdir']}/error)"
+  only_if Dir.exist?("#{apache_work_dir}/error")
 end
 
 
