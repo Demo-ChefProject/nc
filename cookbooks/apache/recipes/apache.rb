@@ -11,7 +11,7 @@ apache_httpd_conf = "#{apache_work_dir}/conf"
 not_if do File.exist?("C:/Windows/temp/execution.log")
 
   #setting guard for execution
-  file C:/Windows/temp/execution.log do
+  file "C:/Windows/temp/execution.log" do
     content "RUNNING"
     action :create
   end
@@ -96,7 +96,7 @@ not_if do File.exist?("C:/Windows/temp/execution.log")
   end
 
   #setting guard for execution
-  file C:/Windows/temp/execution.log do
+  file "C:/Windows/temp/execution.log" do
     action :delete
   end
 end
