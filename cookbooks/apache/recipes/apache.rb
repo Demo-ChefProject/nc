@@ -4,6 +4,7 @@ apache_package_name = node['nc4']['apache-httpd-32']['package']
 apache_install_loc = node['nc4']['apache']['install_location']
 apache_server_name = node['nc4']['server_name']
 apache_backup_touch = node['ohai_time']
+akamai_check = node['nc4']['akamai_check']
 apache_work_dir = "#{apache_install_loc}/HTTPD"
 apache_httpd_conf = "#{apache_work_dir}/conf"
 
@@ -44,7 +45,7 @@ end
 #end
 
 cookbook_file "#{apache_httpd_conf}/extra/#{apache_server_name}.conf" do
-  source "node['nc4']['akamai_check'].conf"
+  source "#{akamai_check}.conf"
   action :create
 end
 
