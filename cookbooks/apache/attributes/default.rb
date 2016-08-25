@@ -10,7 +10,7 @@ default['nc4']['apache']['install_location'] = "C:/NC4/MC3"
 default['nc4']['server_name'] = "MC3AgileDev"
 
 #check to add the akamai condition in future
-default['nc4']['use_akamai'] = File.exists?("C:/jenkins/jenkins_params.txt") ? File.read("C:/jenkins/jenkins_params.txt") : "NO"
+default['nc4']['use_akamai'] = File.exist?("./jenkins_params.txt") ? File.read("./jenkins_params.txt") : "NO"
 
 case node['nc4']['use_akamai']
 when "NO"
