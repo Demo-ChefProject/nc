@@ -24,7 +24,8 @@ $Pegacred = new-object -TypeName System.Management.Automation.PSCredential -argu
 $Session = New-PSSession -ComputerName 54.175.57.21 -Credential $Pegacred
 
 #Script which runs the ruby script in the remote server
-$Script = {powershell.exe chef-client -j test_jenkins.json}
+echo "{ \"use_akamai\": %use_akamai% }" > ./test_jenkins.json
+$Script = {powershell.exe chef-client -j ./test_jenkins.json}
 
 echo "*****"
 echo "**Running cookbook..."
