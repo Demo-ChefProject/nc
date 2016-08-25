@@ -10,8 +10,8 @@ default['nc4']['apache']['install_location'] = "C:/NC4/MC3"
 default['nc4']['server_name'] = "MC3AgileDev"
 
 #check to add the akamai consition in future
-#default['nc4']['use_akamai'] = "#{ENV['use_akamai']}"
-default['nc4']['use_akamai'] = "YES"
+default['nc4']['use_akamai'] = "#{ENV['use_akamai']}"
+#default['nc4']['use_akamai'] = "YES"
 
 case node['nc4']['use_akamai']
 when "NO"
