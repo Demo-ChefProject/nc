@@ -2,6 +2,6 @@
 	"name": "apache",
 	"description": "This role installs and configures apache httpd",
 	"run_list": [
-		"recipe[apache::default]"
+		"recipe[apache]"
 		]
 }
