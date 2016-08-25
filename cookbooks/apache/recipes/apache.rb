@@ -1,17 +1,11 @@
 
-#apache_download_from = "#{node['nc4']['nexus']['url']}#{node['nc4']['apache-httpd-32']['version']}#{node['nc4']['apache-httpd-32']['package']}"
-apache_download_from = "http://54.175.158.124:8081/repository/Rigil/apache-httpd-32-2.2.32.zip"
+apache_download_from = "#{node['nc4']['nexus']['url']}/#{node['nc4']['apache-httpd-32']['version']}/#{node['nc4']['apache-httpd-32']['package']}"
 apache_package_name = node['nc4']['apache-httpd-32']['package']
 apache_install_loc = node['nc4']['apache']['install_location']
 apache_server_name = node['nc4']['server_name']
 apache_backup_touch = node['ohai_time']
 apache_work_dir = "#{apache_install_loc}/HTTPD"
 apache_httpd_conf = "#{apache_work_dir}/conf"
-
-#setting guard for execution
-#file "C:/Windows/temp/execution.log" do
-#  action :create
-#end
 
 #Download the Apache zip file
 remote_file "#{apache_install_loc}/#{apache_package_name}" do
@@ -50,7 +44,7 @@ end
 #end
 
 cookbook_file "#{apache_httpd_conf}/extra/#{apache_server_name}.conf" do
-  source 'server_name.conf'
+  source "#{akamai_check}.conf"
   action :create
 end
 
@@ -87,8 +81,3 @@ powershell_script 'install Apache service if not exists' do
      }
   EOH
 end
-
-#setting guard for execution
-#file "C:/Windows/temp/execution.log" do
-#  action :delete
-#end
