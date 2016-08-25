@@ -9,14 +9,4 @@
 #
 
 
-#check to add the akamai consition in future
-use_akamai = "0"
-
-case "#{use_akamai}"
-when "0"
-	akamai_check = "server_name"
-when "1"
-	akamai_check = "server_name_akamai"
-end
-
 include_recipe "apache::apache"

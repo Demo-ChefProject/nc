@@ -8,3 +8,14 @@ default['nc4']['apache-httpd-32']['package']="apache-httpd-32-2.2.32.zip"
 #Apache install location variables
 default['nc4']['apache']['install_location'] = "C:/NC4/MC3"
 default['nc4']['server_name'] = "MC3AgileDev"
+
+#check to add the akamai consition in future
+use_akamai = "0"
+
+case node['use_akamai']
+when "0"
+	default['akamai_check'] = "server_name"
+when "1"
+	default['akamai_check'] = "server_name_akamai"
+end
+
