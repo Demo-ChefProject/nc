@@ -14,7 +14,7 @@ echo "Uploading cookbook..."
 knife upload cookbooks apache
 
 # Bootstrap a node to its chef server
-# knife bootstrap windows winrm 54.175.57.21 --winrm-user Administrator --winrm-password 'd*G%tc9"&"HLK' --node-name Rigil_node_Windows -r 'role[apache]' -y
+ knife bootstrap windows winrm 54.175.57.21 --winrm-user Administrator --winrm-password 'd*G%tc9"&"HLK' --node-name Rigil_node_Windows -r 'role[apache]' -y
 
 #Passing credentials stored as a secure string
 $Pass = cat C:\securestring.txt | convertto-securestring
@@ -24,8 +24,6 @@ $Pegacred = new-object -TypeName System.Management.Automation.PSCredential -argu
 $Session = New-PSSession -ComputerName 54.175.57.21 -Credential $Pegacred
 
 #Script which runs the ruby script in the remote server
-#pwd
-#$Script = {powershell.exe chef-client -j C:\Jenkins\workspace\Chef-apache\test_jenkins.json}
 $Script = {powershell.exe chef-client}
 
 echo "*****"
