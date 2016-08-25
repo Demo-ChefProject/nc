@@ -14,8 +14,7 @@ use_akamai = "0"
 
 case node['use_akamai']
 when "0"
-	default['akamai_check'] = "server_name"
+	default['nc4']['akamai_check'] = "server_name"
 when "1"
-	default['akamai_check'] = "server_name_akamai"
+	default['nc4']['akamai_check'] = "server_name_akamai"
 end
-

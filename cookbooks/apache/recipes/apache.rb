@@ -44,7 +44,7 @@ end
 #end
 
 cookbook_file "#{apache_httpd_conf}/extra/#{apache_server_name}.conf" do
-  source "#{akamai_check}.conf"
+  source "node['nc4']['akamai_check'].conf"
   action :create
 end
 
