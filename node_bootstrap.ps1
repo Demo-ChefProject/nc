@@ -26,6 +26,7 @@ $Session = New-PSSession -ComputerName 54.175.57.21 -Credential $Pegacred
 #Script which runs the ruby script in the remote server
 $Script = {powershell.exe chef-client}
 
+echo "*****\n**Uploading cookbook...\n*****"
 $Job = Invoke-Command -Session $Session -Scriptblock $Script
 echo $Job
 
