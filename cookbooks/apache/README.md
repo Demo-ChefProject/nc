@@ -1,18 +1,12 @@
 # apache Cookbook
 
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwich.
+This cookbook installs and configures apache for Mission Ceter project.
 
 ## Requirements
 
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
 ### Platforms
 
-- SandwichOS
+- Windows
 
 ### Chef
 
@@ -20,37 +14,14 @@ e.g.
 
 ### Cookbooks
 
-- `toaster` - apache needs toaster to brown your bagel.
+- `apache` - apache cookbook to install for Mission Center.
 
 ## Attributes
 
-TODO: List your cookbook attributes here.
-
-e.g.
-### apache::default
-
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['apache']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+check attribites folder for all the defined variables.
 
 ## Usage
 
-### apache::default
-
-TODO: Write usage instructions for each cookbook.
-
-e.g.
 Just include `apache` in your node's `run_list`:
 
 ```json
@@ -62,19 +33,24 @@ Just include `apache` in your node's `run_list`:
 }
 ```
 
-## Contributing
+## Whats does this cookbook do?
 
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
+```
+Copy Apache to target node from Nexus repo
+- Take backup of the current HTTPD folder
+- Unzip Apache zip in target location
+- Remove the Logs/* files
+- Leave error folder untouched
 
-e.g.
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
+Update httpd conf
+- update workdir location
+- Update the log file name for both error and Access log
 
-## License and Authors
+Create a new server specific file
+- The should be created in conf/extra/<hostname>.conf
 
-Authors: TODO: List authors
+Modify conf/httpd-vhost.conf for the correct server name inside extra folder.
+- update the newly created filename in the httpd-vhosts.conf file
 
+- Check and create Apache service if not existing
+```

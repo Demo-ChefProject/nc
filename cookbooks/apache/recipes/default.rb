@@ -8,3 +8,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
+
+#check to add the akamai consition in future
+
+when "0"
+when "1"
+end
+
+include_recipe "apache::apache"
