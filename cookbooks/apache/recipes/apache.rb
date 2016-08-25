@@ -9,7 +9,11 @@ apache_work_dir = "#{apache_install_loc}/HTTPD"
 apache_httpd_conf = "#{apache_work_dir}/conf"
 
 #Check if install location exists
-execute "mkdir #{apache_install_loc}" do
+powershell_script 'Create Install Location' do
+  guard_interpreter :powershell_script
+  code <<-EOH
+    New-Item -ItemType Directory -Path #{apache_install_loc}
+  EOH
   not_if do Dir.exist?("#{apache_install_loc}") end
 end
 
