@@ -8,6 +8,11 @@ akamai_check = node['nc4']['akamai_check']
 apache_work_dir = "#{apache_install_loc}/HTTPD"
 apache_httpd_conf = "#{apache_work_dir}/conf"
 
+#Check if install location exists
+execute "mkdir #{apache_install_loc}" do
+  not_if do Dir.exist?("#{apache_install_loc}") end
+end
+
 #Download the Apache zip file
 remote_file "#{apache_install_loc}/#{apache_package_name}" do
   source apache_download_from
