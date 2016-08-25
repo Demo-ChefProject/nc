@@ -13,8 +13,8 @@ default['nc4']['server_name'] = "MC3AgileDev"
 default['nc4']['use_akamai'] = "#{ENV['use_akamai']}"
 
 case node['nc4']['use_akamai']
-when "0"
+when "NO"
 	default['nc4']['akamai_check'] = "server_name"
-when "1"
+when "YES"
 	default['nc4']['akamai_check'] = "server_name_akamai"
 end
