@@ -78,10 +78,26 @@ Update httpd conf
 - Update the log file name for both error and Access log
 
 Create a new server specific file
-- The should be created in conf/extra/<hostname>.conf
+- This should be created in conf/extra/<hostname>.conf
 
-Modify conf/httpd-vhost.conf for the correct server name inside extra folder.
+- Modify conf/httpd-vhost.conf for the correct server name inside extra folder.
 - update the newly created filename in the httpd-vhosts.conf file
+A template is used for this purpose
+
+What it does?
+A template resource block typically declares the location in which a file is to be created, the source template that will be used to create the file, and the permissions needed on that file. 
+
+SYNTAX of a template
+template '/etc/motd' do
+  source 'motd.erb'
+  owner 'root'
+  group 'root'
+  mode '0755'
+end
+
+Link to learn more on templates in chef: https://docs.chef.io/resource_template.html
 
 - Check and create Apache service if not existing
+The Get Service command in powershell is used for this purpose.
+Linke to know more abut the command in detail: https://technet.microsoft.com/en-us/library/ee176858.aspx
 ```
