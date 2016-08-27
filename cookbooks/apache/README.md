@@ -44,6 +44,7 @@ Just include `apache` in your node's `run_list`:
  - Update httpd conf
  - update the newly created filename in the httpd-vhosts.conf file
  - Check and create Apache service if not existing
+```
 
 ## On a more detail oriented scenario about how the code works (with the packages used and on the coding front)
 
@@ -100,4 +101,4 @@ Link to learn more on templates in chef: https://docs.chef.io/resource_template.
 - To check and create Apache service if it's not existing
 The Get Service command in powershell is used for this purpose.
 Linke to know more abut the command in detail: https://technet.microsoft.com/en-us/library/ee176858.aspx
-```
+
