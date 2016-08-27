@@ -36,8 +36,18 @@ Just include `apache` in your node's `run_list`:
 ## Whats does this cookbook do?
 
 ```
-Copy Apache to target node from Nexus repo
-- Check if install location exists
+ - Copy Apache to target node from Nexus repo		 
+ - Take backup of the current HTTPD folder
+ - Unzip Apache zip in target location
+ - Remove the Logs/* files
+ - Leave error folder untouched
+ - Update httpd conf
+ - update the newly created filename in the httpd-vhosts.conf file
+ - Check and create Apache service if not existing
+
+## On a more detail oriented scenario about how the code works (with the packages used and on the coding front)
+
+- For checking if install location exists
 A powershell script is used for this purpose. What this piece of code typically does is, it checks if the install location exists else exit the location.
 
 - Then the Apache zip file is downloaded into that location.
@@ -57,10 +67,10 @@ remote_file '/var/www/customers/public_html/index.php' do
 end
 Link to learn more on this topic of remote_file - https://docs.chef.io/resource_remote_file.html
 
-- Unzip Apache zip in target location
+- To unzip Apache zip into the target location
 Again a powershell script is used for this purpose.
 
-- Remove the Logs/* files
+- In order to remove the Logs/* files
 For the removal of the Log files we make use of Remove-Item in powershell
 
 What it does?
@@ -71,17 +81,7 @@ Remove-Item File_Path\* -recurse
 
 Link to learn more on Remove_Item - https://technet.microsoft.com/en-us/library/ee176938.aspx
 
-- Leave error folder untouched
-
-Update httpd conf
-- update workdir location
-- Update the log file name for both error and Access log
-
-Create a new server specific file
-- This should be created in conf/extra/<hostname>.conf
-
-- Modify conf/httpd-vhost.conf for the correct server name inside extra folder.
-- update the newly created filename in the httpd-vhosts.conf file
+- Inorder to update the newly created filename in the httpd-vhosts.conf file
 A template is used for this purpose
 
 What it does?
@@ -97,7 +97,7 @@ end
 
 Link to learn more on templates in chef: https://docs.chef.io/resource_template.html
 
-- Check and create Apache service if not existing
+- To check and create Apache service if it's not existing
 The Get Service command in powershell is used for this purpose.
 Linke to know more abut the command in detail: https://technet.microsoft.com/en-us/library/ee176858.aspx
 ```
