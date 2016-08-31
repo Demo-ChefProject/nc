@@ -21,7 +21,7 @@ $Pass = cat C:\securestring.txt | convertto-securestring
 $Pegacred = new-object -TypeName System.Management.Automation.PSCredential -argumentlist "Administrator",$pass
 
 #  Create a remote session to the chef node
-$Session = New-PSSession -ComputerName 54.175.57.21 -Credential $Pegacred
+$Session = New-PSSession -ComputerName 52.23.166.135 -Credential $Pegacred
 
 #Script which runs the ruby script in the remote server
 $Script = {powershell.exe chef-client}
