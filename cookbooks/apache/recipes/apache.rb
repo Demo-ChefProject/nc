@@ -18,19 +18,10 @@ powershell_script 'Create Install Location' do
 end
 
 #Download the Apache zip file
-#remote_file "#{apache_install_loc}/#{apache_package_name}" do
-#  source apache_download_from
-#  action :create
-#  notifies :run, 'powershell_script[Unzip Apache package]', :immediately
-#end
-
-#Download the Apache zip file
-remote_file "Download Apache" do
-  path "#{apache_install_loc}/#{apache_package_name}"
+remote_file "#{apache_install_loc}/#{apache_package_name}" do
   source apache_download_from
-  backup 4
   action :create
-  notifies :run, 'powershell_script[backup current install]', :immediately
+  notifies :run, 'powershell_script[Unzip Apache package]', :immediately
 end
 
 #Backup the current install
