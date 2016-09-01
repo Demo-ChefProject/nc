@@ -30,6 +30,16 @@ remote_file "Download Apache" do
   source apache_download_from
   backup 4
   action :create
+  notifies :run, 'powershell_script[backup current install]', :immediately
+end
+
+#Backup the current install
+powershell_script 'backup current install' do
+  guard_interpreter :powershell_script
+  code <<-EOH
+    Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-#{apache_backup_touch}"
+  EOH
+  not_if do Dir.exist?("#{apache_work_dir}-#{apache_backup_touch}") end
   notifies :run, 'powershell_script[Unzip Apache package]', :immediately
 end
 
@@ -37,12 +47,10 @@ end
 powershell_script 'Unzip Apache package' do
   guard_interpreter :powershell_script
   code <<-EOH
-    Rename-Item -path #{apache_work_dir} -newName "#{apache_work_dir}-#{apache_backup_touch}"
     powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('#{apache_install_loc}/#{apache_package_name}', '#{apache_install_loc}'); }"
   EOH
   notifies :run, 'powershell_script[Remove logs folder]', :immediately
 end
-
 
 powershell_script 'Remove logs folder' do
   guard_interpreter :powershell_script
