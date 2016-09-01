@@ -95,7 +95,7 @@ powershell_script 'install Apache service if not exists' do
   code <<-EOH
      $Service = Get-Service -Name Apache-HTTPD-2.2 -ErrorAction SilentlyContinue
      if (! $Service) {
-          sc create Apache-HTTPD-2.2 binPath= \"#{apache_work_dir}/bin/httpd.exe\" start= auto DisplayName= \"Apache HTTPD 2.2\"
+          sc create Apache-HTTPD-2.2 binPath= \"#{apache_work_dir}/bin/httpd.exe\" start= auto DisplayName= \"Apache 2.2 HTTPD\"
      }
   EOH
 end
