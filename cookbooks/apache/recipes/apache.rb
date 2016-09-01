@@ -28,7 +28,7 @@ end
 remote_file "Download Apache" do
   path "#{apache_install_loc}/#{apache_package_name}"
   source apache_download_from
-  backup true
+  backup 4
   action :create
   notifies :run, 'powershell_script[Unzip Apache package]', :immediately
 end
