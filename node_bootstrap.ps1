@@ -17,11 +17,11 @@ knife upload cookbooks apache
  knife bootstrap windows winrm 52.23.166.135 --winrm-user Administrator --winrm-password 'd*G%tc9"&"HLK' --node-name Rigil_node_Windows -r 'role[apache]' -y
 
 #Passing credentials stored as a secure string
-$Pass = cat C:\securestring.txt | convertto-securestring
-$Pegacred = new-object -TypeName System.Management.Automation.PSCredential -argumentlist "Administrator",$pass
+$pass = ConvertTo-SecureString '?%EW!26tAzW' -AsPlainText -Force
+$Chefcred = new-object -TypeName System.Management.Automation.PSCredential -argumentlist "Administrator",$pass
 
 #  Create a remote session to the chef node
-$Session = New-PSSession -ComputerName 52.23.166.135 -Credential $Pegacred
+$Session = New-PSSession -ComputerName 52.23.166.135 -Credential $Chefcred
 
 #Script which runs the ruby script in the remote server
 $Script = {powershell.exe chef-client}
